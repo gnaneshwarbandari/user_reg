@@ -1,0 +1,7 @@
+Django
+django-crispy-forms
+Pillow
+pytz
+sqlparse
+crispy_bootstrap4
+mysql-connector-python
