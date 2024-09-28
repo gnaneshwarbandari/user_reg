@@ -7,8 +7,7 @@ from .models import Contact
 from studentapp.models import Student
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from .forms import AdminRegistrationForm, StudentRegistrationForm
