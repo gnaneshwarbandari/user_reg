@@ -1,0 +1,76 @@
+{% extends 'courseapp/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col-md-12">
+            <section id="bc">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'adminapp:admin_home' %}">Admin Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Courses
+                        </li>
+                    </ol>
+                </nav>
+            </section>
+
+            <h1 class="text-info mt-3">
+                Courses
+            </h1>
+
+            <form method="post"></form>
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Duration</th>
+                        <th>Trainer</th>
+                        <th>Topic</th>
+                        <th>Fees</th>
+                        <th>Status (Active/Inactive)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for each in course %}
+                    <tr>
+                        <td>
+                            <a class="list-group-item list-group-item-action"
+                                href="{% url 'courseapp:each_courses' each.pk %}">
+                                {{ each.title }}
+                            </a>
+                        </td>
+                        <td>{{ each.duration }}</td>
+                        <td>{{ each.trainer }}</td>
+                        <td>{{ each.topic }}</td>
+                        <td>{{ each.fees }}</td>
+                        <td>
+                            <input type="checkbox" name="status" {% if each.status %} checked {% endif %} disabled>
+                        </td>
+                        <td>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="course_id" value="{{ each.id }}">
+                                <button type="submit">
+                                    {% if each.status %} Deactivate {% else %} Activate {% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

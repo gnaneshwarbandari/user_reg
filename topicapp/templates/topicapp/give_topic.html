@@ -1,0 +1,40 @@
+{% extends 'topicapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card mt-3 mb-4">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <!-- create a legend -->
+                            <legend class="border-bottom mb-4">
+
+                                Add Topic
+                            </legend>
+                            {{form|crispy}}
+                        </fieldset>
+                        <!-- create a button -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info btn-block">Add</button>
+                            
+                        </div>
+
+                    </form>
+                    <!--           <div class="mt-3">-->
+                    <!--            <a href="#" class="btn btn-outline-warning">Edit</a>-->
+                    <!--        </div>-->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock%}

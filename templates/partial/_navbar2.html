@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container">
+    <a href="{% url 'userapp:index_page' %}" class="navbar-brand">Course Registration</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      <ul class="navbar-nav ml-auto">
+        <li {% if '/' == request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+          <a href="{% url 'userapp:index_page' %}" class="nav-link">Home</a>
+        </li>
+        <li {% if 'view' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+          <a href="{% url 'studentapp:course_view' %}" class="nav-link">Courses</a>
+        </li>
+        <li {% if 'about' in request.path %} class="nav-item active" {% else %} class=nav-item {% endif %}>
+          <a href="{% url 'userapp:about_page' %}" class="nav-link">About Us</a>
+        </li>
+        <li {% if 'contact' in request.path%} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+          <a href="{% url 'userapp:contact' %}" class="nav-link">Contact</a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'userapp:logout' %}" class="nav-link">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'userapp:login' %}" class="nav-link">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+</nav>

@@ -1,0 +1,70 @@
+{% extends 'topicapp/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col-md-6">
+            <!--    breadcrumb -->
+            <section id="bc mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'adminapp:admin_home' %}">Admin Home</a>
+                        </li>
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Topics
+                        </li>
+                    </ol>
+                </nav>
+            </section>
+            <h1 class="text-info">
+                Topics
+            </h1>
+            {% if topics %}
+            <form method="post"></form>
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Topic Name</th>
+                        <th>Duration</th>
+                        <th>Status (Active/Inactive)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for topic in topics %}
+                    <tr>
+                        <td>
+                            <a class="list-group-item list-group-item-action" href="{% url 'topicapp:each_topic' topic.pk %}">
+                                {{ topic.topic_name }}
+                            </a>
+                        </td>
+                        <td>{{ topic.duration }}</td>
+                        <td>
+                            <input type="checkbox" name="status" {% if trainer.status %} checked {% endif %} disabled>
+                        </td>
+                        <td>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="topic_id" value="{{ topic.id }}">
+                                <button type="submit">
+                                    {% if topic.status %} Deactivate {% else %} Activate {% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

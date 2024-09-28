@@ -1,0 +1,71 @@
+{% extends 'batchapp/base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row py-5">
+        <div class="col-md-12">
+            <!--    breadcrumb -->
+            <section id="bc mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'adminapp:admin_home' %}">Admin Home</a>
+                        </li>
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Batches
+                        </li>
+                    </ol>
+                </nav>
+            </section>
+            <h1 class="text-info">
+                Batches
+            </h1>
+            
+            <form method="post">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Batch Number</th>
+                            <th>Course</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status (Active/Inactive)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for batch in batches %}
+                        <tr>
+                            <td>
+                                <a class="list-group-item list-group-item-action"
+                                    href="{% url 'batchapp:each_batch' batch.pk %}">
+                                    {{ batch.batch_number }}
+                                </a>
+                            </td>
+                            <td>{{ batch.course }}</td>
+                            <td>{{ batch.start_date }}</td>
+                            <td>{{ batch.end_date }}</td>
+                            <td>
+                                <input type="checkbox" name="status" {% if batch.status %} checked {% endif %} disabled>
+                            </td>
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="batch_id" value="{{ batch.id }}">
+                                    <button type="submit">
+                                        {% if batch.status %} Deactivate {% else %} Activate {% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+    </div>
+</div>
+
+{% endblock %}

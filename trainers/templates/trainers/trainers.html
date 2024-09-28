@@ -1,0 +1,78 @@
+{% extends 'trainers/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row mb-5 mt-5">
+    <div class="col-md-6">
+      <!--        breadcrumb navigations -->
+      <section id="bc" class="mb-5">
+        <div class="container">
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminapp:admin_home' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Trainers</li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+
+      {% if data %}
+
+
+      <h1 class="text-info mt-3">
+        Trainers
+      </h1>
+
+      <form method="post"></form>
+      {% csrf_token %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Qualification</th>
+            <th>College</th>
+            <th>Experience</th>
+            <th>Training Exp.</th>
+            <th>Status (Active/Inactive)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for trainer in data %}
+          <tr>
+            <td>
+              <a class="list-group-item list-group-item-action" href="{% url 'trainers:trainer_one' trainer.pk %}">
+                {{ trainer.name }}
+              </a>
+            </td>
+            <td>{{ trainer.qualification }}</td>
+            <td>{{ trainer.college }}</td>
+            <td>{{ trainer.experience }}</td>
+            <td>{{ trainer.training_exp }}</td>
+            <td>
+              <input type="checkbox" name="status" {% if trainer.status %} checked {% endif %} disabled>
+            </td>
+            <td>
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="trainer_id" value="{{ trainer.id }}">
+                <button type="submit">
+                  {% if trainer.status %} Deactivate {% else %} Activate {% endif %}
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </form>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
